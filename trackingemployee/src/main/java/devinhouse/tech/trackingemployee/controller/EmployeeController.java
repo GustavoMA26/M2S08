@@ -2,6 +2,7 @@ package devinhouse.tech.trackingemployee.controller;
 
 import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
 import devinhouse.tech.trackingemployee.model.transport.EmployeeDTO;
+import devinhouse.tech.trackingemployee.model.transport.SpecifiedEmployeeDTO;
 import devinhouse.tech.trackingemployee.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -29,12 +30,18 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+
     @GetMapping
     public ResponseEntity<Page<EmployeeDTO>> listAll(@PageableDefault(size = 12, sort = "name") Pageable pageable) {
         Page<EmployeeDTO> response= this.employeeService.listAll(pageable);
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SpecifiedEmployeeDTO> getById(@PathVariable("id") Integer id) {
+        SpecifiedEmployeeDTO response = this.employeeService.getSpecificEmployee(id);
+        return ResponseEntity.ok(response);
+    }
 
 
 

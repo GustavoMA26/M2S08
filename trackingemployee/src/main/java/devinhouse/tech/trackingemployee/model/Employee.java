@@ -1,6 +1,7 @@
 package devinhouse.tech.trackingemployee.model;
 
 import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
+import devinhouse.tech.trackingemployee.model.transport.RegisterDTO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -68,6 +69,10 @@ public class Employee {
 
     public List<Register> getRegisters() {
         return registers;
+    }
+
+    public List<RegisterDTO> getRegisterAsObject() {
+        return this.registers.stream().map(RegisterDTO::new).toList();
     }
 
     public void setRegisters(List<Register> registers) {

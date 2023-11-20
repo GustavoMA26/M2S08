@@ -3,6 +3,7 @@ package devinhouse.tech.trackingemployee.service;
 import devinhouse.tech.trackingemployee.model.Employee;
 import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
 import devinhouse.tech.trackingemployee.model.transport.EmployeeDTO;
+import devinhouse.tech.trackingemployee.model.transport.SpecifiedEmployeeDTO;
 import devinhouse.tech.trackingemployee.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Pattern;
@@ -33,4 +34,11 @@ public class EmployeeService {
     public Page<EmployeeDTO> listAll(Pageable pageable) {
         return this.employeeRepository.findAll(pageable).map(EmployeeDTO::new);
     }
+
+    public SpecifiedEmployeeDTO getSpecificEmployee(Integer id) {
+        return this.employeeRepository.findById(id).map(SpecifiedEmployeeDTO::new)
+                .orElseThrow(() -> new IllegalArgumentException("Employee " + id + " doesn't exist"));
+    }
+
+
 }
