@@ -5,7 +5,13 @@ import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
 import devinhouse.tech.trackingemployee.model.transport.EmployeeDTO;
 import devinhouse.tech.trackingemployee.repository.EmployeeRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Pattern;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EmployeeService {
@@ -22,5 +28,9 @@ public class EmployeeService {
         Employee newEmployee = new Employee(body);
         this.employeeRepository.save(newEmployee);
         return new EmployeeDTO(newEmployee);
+    }
+
+    public Page<EmployeeDTO> listAll(Pageable pageable) {
+        return this.employeeRepository.findAll(pageable).map(EmployeeDTO::new);
     }
 }
