@@ -1,10 +1,10 @@
 package devinhouse.tech.trackingemployee.service;
 
 import devinhouse.tech.trackingemployee.model.Employee;
-import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
-import devinhouse.tech.trackingemployee.model.transport.EmployeeDTO;
-import devinhouse.tech.trackingemployee.model.transport.SpecifiedEmployeeDTO;
+import devinhouse.tech.trackingemployee.model.Register;
+import devinhouse.tech.trackingemployee.model.transport.*;
 import devinhouse.tech.trackingemployee.repository.EmployeeRepository;
+import devinhouse.tech.trackingemployee.repository.RegisterRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.data.domain.Page;
@@ -38,6 +38,17 @@ public class EmployeeService {
     public SpecifiedEmployeeDTO getSpecificEmployee(Integer id) {
         return this.employeeRepository.findById(id).map(SpecifiedEmployeeDTO::new)
                 .orElseThrow(() -> new IllegalArgumentException("Employee " + id + " doesn't exist"));
+    }
+
+    @Transactional
+    public RegisterDTO createRegister(Integer id, CreateRegisterDTO body) {
+        Employee employee = this.employeeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Employee " + id + " doesn't exist"));
+
+        Register register = new Register(body.registerType(), employee);
+        employee.getRegisters().add(register);
+
+        return new RegisterDTO(register);
     }
 
 

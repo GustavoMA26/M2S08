@@ -32,6 +32,8 @@ public class Register {
         this.employee = employee;
     }
 
+    public Register(RegisterType registerType, Employee employee) {
+    }
     public Integer getId() {
         return id;
     }
