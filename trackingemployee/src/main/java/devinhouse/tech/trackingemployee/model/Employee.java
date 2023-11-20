@@ -1,5 +1,6 @@
 package devinhouse.tech.trackingemployee.model;
 
+import devinhouse.tech.trackingemployee.model.transport.CreateEmployeeDTO;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -24,4 +25,52 @@ public class Employee {
     @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Register> registers = new ArrayList<>();
 
+    public Employee() {
+    }
+
+    public Employee(CreateEmployeeDTO body) {
+        this.name = body.name();
+        this.position = body.position();
+        this.salary = body.salary();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Float getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Float salary) {
+        this.salary = salary;
+    }
+
+    public List<Register> getRegisters() {
+        return registers;
+    }
+
+    public void setRegisters(List<Register> registers) {
+        this.registers = registers;
+    }
 }
